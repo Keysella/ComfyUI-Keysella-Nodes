@@ -1,3 +1,3 @@
 # ComfyUI-Keysella-Nodes
 
-NodePack for ComfyUI.
+Node pack for ComfyUI.
