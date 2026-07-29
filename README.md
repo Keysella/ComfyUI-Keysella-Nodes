@@ -1,2 +1,3 @@
-# ComfyUI-Keysella-PromptHelperNodes
-Additional nodes for prompt building in ComfyUI.
+# ComfyUI-Keysella-Nodes
+
+NodePack for ComfyUI.
