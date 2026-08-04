@@ -216,3 +216,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# ComfyUI-Keysella-Nodes: track the nodes-data folder structure and its
+# placeholder files (e.g. put_your_prompts_here), but ignore actual
+# user-added prompt files so personal prompts don't get committed.
+nodes-data/**/*.txt
+nodes-data/**/*.md

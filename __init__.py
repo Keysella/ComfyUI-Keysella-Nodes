@@ -20,6 +20,7 @@ _HERE = pathlib.Path(__file__).parent
 # Relative paths (from this file) to every node module that should be loaded.
 _NODE_MODULES = [
     "nodes/prompt-nodes/prompt_perfectionist.py",
+    "nodes/prompt-nodes/prompt-from-file-loader.py",
 ]
 
 NODE_CLASS_MAPPINGS = {}
