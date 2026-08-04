@@ -3,7 +3,7 @@ import pathlib
 from aiohttp import web
 from server import PromptServer
 
-_DATA_DIR = pathlib.Path(__file__).resolve().parents[2] / "nodes-data" / "prompt-from-file-loader-data"
+_DATA_DIR = pathlib.Path(__file__).resolve().parents[2] / "nodes-data" / "prompt-file-editor-data"
 _ALLOWED_EXTENSIONS = {".txt", ".md"}
 _API_PREFIX = "/keysella/prompt_file_editor"
 

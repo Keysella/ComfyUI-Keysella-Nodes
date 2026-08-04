@@ -10,10 +10,9 @@ ComfyUI-Keysella-Nodes/
   nodes/
     prompt-nodes/         # nodes for writing/assembling prompts
       prompt_perfectionist.py
-      prompt-from-file-loader.py
       prompt-file-editor.py
   nodes-data/
-    prompt-from-file-loader-data/  # user-provided prompt .txt/.md files, see "Data folders" below
+    prompt-file-editor-data/  # user-provided prompt .txt/.md files, see "Data folders" below
   web/                    # frontend (.js) extensions, auto-loaded by ComfyUI
     prompt-file-editor.js # powers PromptFileEditor's live text field + Save button
 ```
@@ -38,20 +37,10 @@ Fields: `base prompt`, `background description`, `character and view`,
 `actions`, `extra`, `negative prompt`. Hover any field label for a
 tooltip with an example.
 
-### PromptFromFileLoader Node (`Keysella/prompt`)
-
-Loads a ready-made prompt from a `.txt`/`.md` file stored under
-`nodes-data/prompt-from-file-loader-data/` and outputs it as a `STRING`.
-Files should contain nothing but a single comma-separated tag prompt.
-
-Files can be organized into subfolders (e.g. `pose/`, `background/`,
-`misc/`) — the node's dropdown lists each file's path relative to the data
-folder. See "Data folders" below for details.
-
 ### PromptFileEditor Node (`Keysella/prompt`)
 
-Same data folder as `PromptFromFileLoader`, but lets you view/edit and save
-prompt files right from the node:
+Lets you browse, view/edit, and save prompt files stored under
+`nodes-data/prompt-file-editor-data/`:
 
 - **Choose file** button opens a nested folder-tree menu (same mechanic as
   ComfyUI's "Add Node" cascading submenus) built from the data folder's
@@ -71,22 +60,20 @@ prompt files right from the node:
   read-only path line updates to the new/renamed file.
 - Backend API routes (`/keysella/prompt_file_editor/list|read|save`) are
   registered in `prompt-file-editor.py` and restrict reads/writes to the
-  `nodes-data/prompt-from-file-loader-data/` folder.
-
-`PromptFromFileLoader` is kept as a simpler, editor-less alternative.
+  `nodes-data/prompt-file-editor-data/` folder.
 
 ## Data folders
 
-### `nodes-data/prompt-from-file-loader-data/`
+### `nodes-data/prompt-file-editor-data/`
 
-Drop prompt files here for the `PromptFromFileLoader` node to pick up.
+Drop prompt files here for the `PromptFileEditor` node to pick up.
 
 - Allowed extensions: `.txt` or `.md`.
 - Each file must contain **only** the prompt itself: comma-separated tags,
   nothing else (no headers, no extra formatting).
 - You can freely organize files into subfolders, e.g.:
   ```
-  prompt-from-file-loader-data/
+  prompt-file-editor-data/
     pose/
       standing-wave.txt
       sitting-crosslegged.txt
@@ -96,9 +83,9 @@ Drop prompt files here for the `PromptFromFileLoader` node to pick up.
     misc/
       lighting-rim.txt
   ```
-- The node's dropdown lists every file here (recursively) using its path
-  relative to this folder (e.g. `pose/standing-wave.txt`).
-- Restart ComfyUI or refresh the node list to pick up newly added files.
+- The **Choose file** button lists every file here (recursively, nested by
+  subfolder) using its path relative to this folder (e.g.
+  `pose/standing-wave.txt`).
 - Actual prompt files (`.txt`/`.md`) under this folder are gitignored (only
   the folder structure and the `put_your_prompts_here` placeholder are
   tracked), so your personal prompts won't end up committed.
