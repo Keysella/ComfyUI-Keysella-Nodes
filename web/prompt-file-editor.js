@@ -142,8 +142,18 @@ app.registerExtension({
                 }
             };
 
-            // Populate the text field with the initially selected file's content.
-            loadSelectedFile();
+            // Populate the text field with the initially selected file's content,
+            // but only for brand-new nodes. When a workflow is loaded, ComfyUI
+            // calls onConfigure right after this to restore the saved
+            // prompt_file/prompt_text values - if that happens before this async
+            // fetch resolves, skip it so we don't clobber the restored text with
+            // the default file's content.
+            node._promptFileEditorConfigured = false;
+            setTimeout(() => {
+                if (!node._promptFileEditorConfigured) {
+                    loadSelectedFile();
+                }
+            }, 0);
 
             const chooseButton = node.addWidget("button", "Choose file", null, (_value, _widget, _node, _pos, event) => {
                 openFileBrowser(event, (path) => {
@@ -178,6 +188,12 @@ app.registerExtension({
             const ordered = [chooseButton, displayWidget, textWidget, saveButton];
             const rest = node.widgets.filter((w) => !ordered.includes(w));
             node.widgets = [...rest, ...ordered];
+        };
+
+        const onConfigure = nodeType.prototype.onConfigure;
+        nodeType.prototype.onConfigure = function () {
+            onConfigure?.apply(this, arguments);
+            this._promptFileEditorConfigured = true;
         };
     },
 });
